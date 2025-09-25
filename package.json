@@ -1,0 +1,61 @@
+{
+  "name": "json-idempofy",
+  "version": "1.0.0",
+  "description": "Creates a unique fingerprint from JSON payloads for reliable idempotency in microservices",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "pnpm run build",
+    "pretest": "eslint . --fix && prettier --write ./src/**/*.ts",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "lint:fix": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix && prettier \"{src,apps,libs,test}/**/*.ts\" --write",
+    "prepush": "pnpm run test",
+    "precommit": "lint-staged",
+    "prepare": "husky",
+    "test": "jest --runInBand",
+    "test:watch": "jest --watch --runInBand",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "release": "release-please release-pr --token=$GITHUB_TOKEN --repo-url=https://github.com/DMBerlin/json-idempofy.git --config-file=package.json",
+    "release:create": "release-please release-pr --token=$GITHUB_TOKEN --repo-url=https://github.com/DMBerlin/json-idempofy.git --config-file=package.json",
+    "release:tag": "release-please release-pr --token=$GITHUB_TOKEN --repo-url=https://github.com/DMBerlin/json-idempofy.git --config-file=package.json --create-release"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DMBerlin/json-idempofy.git"
+  },
+  "keywords": [
+    "json",
+    "idempotency",
+    "fingerprint",
+    "hash",
+    "microservices",
+    "api",
+    "unique-id",
+    "deterministic"
+  ],
+  "author": "Daniel Marinho",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DMBerlin/json-idempofy/issues"
+  },
+  "homepage": "https://github.com/DMBerlin/json-idempofy#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^20.0.0",
+    "@commitlint/config-conventional": "^20.0.0",
+    "@types/jest": "^29.5.0",
+    "@types/node": "^20.0.0",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "eslint": "^8.0.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "husky": "^9.1.7",
+    "jest": "^29.5.0",
+    "lint-staged": "^16.2.1",
+    "prettier": "^3.6.2",
+    "ts-jest": "^29.1.0",
+    "typescript": "^5.0.0"
+  }
+}

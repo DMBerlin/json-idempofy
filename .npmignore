@@ -1,0 +1,29 @@
+# Source files
+src/
+*.ts
+!*.d.ts
+
+# Development files
+__tests__/
+*.test.ts
+*.spec.ts
+jest.config.js
+.eslintrc.js
+tsconfig.json
+
+# Documentation
+README.md
+CHANGELOG.md
+LICENSE
+
+# CI/CD
+.github/
+.gitignore
+.npmignore
+
+# Coverage
+coverage/
+*.lcov
+
+# Logs
+*.log
