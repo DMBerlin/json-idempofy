@@ -1,7 +1,3 @@
 {
-  ".": {
-    "release-type": "node",
-    "package-name": "json-idempofy",
-    "version": "1.0.0"
-  }
+  ".": "1.0.0"
 }
