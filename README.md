@@ -361,6 +361,138 @@ const transformations = {
 };
 ```
 
+## 🔧 Supported Transformations
+
+json-idempofy supports 9 powerful transformation operators for data normalization and field manipulation:
+
+### String Transformations
+
+#### `$lower` - Convert to Lowercase
+
+```javascript
+const transformation = { $lower: 'user.email' };
+// "JOHN@EXAMPLE.COM" → "john@example.com"
+```
+
+#### `$upper` - Convert to Uppercase
+
+```javascript
+const transformation = { $upper: 'user.name' };
+// "john doe" → "JOHN DOE"
+```
+
+#### `$trim` - Remove Whitespace
+
+```javascript
+const transformation = { $trim: 'user.name' };
+// "  John Doe  " → "John Doe"
+```
+
+#### `$replace` - String Replacement
+
+```javascript
+const transformation = {
+  $replace: { from: 'old', to: 'new' },
+};
+// "Hello old world" → "Hello new world"
+```
+
+### Number Transformations
+
+#### `$round` - Round to Decimal Places
+
+```javascript
+const transformation = { $round: 2 };
+// 99.999 → 100.00
+// 25.7 → 25.70
+```
+
+### Date Transformations
+
+#### `$date` - Convert to ISO Date String
+
+```javascript
+const transformation = { $date: 'user.createdAt' };
+// Date object or date string → "2023-06-15T10:30:00.000Z"
+```
+
+### Conditional Transformations
+
+#### `$if` - Conditional Logic
+
+```javascript
+const transformation = {
+  $if: {
+    condition: 'user.status',
+    then: 'user.name',
+    else: 'user.id',
+  },
+};
+// If user.status is truthy, return user.name, otherwise user.id
+```
+
+### Existence & Default Transformations
+
+#### `$exists` - Check Field Existence
+
+```javascript
+const transformation = { $exists: 'user.email' };
+// Returns true if field exists and is not null/undefined
+```
+
+#### `$default` - Default Value
+
+```javascript
+const transformation = { $default: 'unknown' };
+// Returns 'unknown' if field is null/undefined, otherwise original value
+```
+
+### Direct Field Reference
+
+```javascript
+const transformation = 'user.name';
+// Direct field access without transformation
+```
+
+### Complete Example
+
+```javascript
+const userData = {
+  email: 'JOHN@EXAMPLE.COM',
+  name: '  John Doe  ',
+  amount: 99.999,
+  status: 'active',
+  createdAt: new Date('2023-06-15T10:30:00Z'),
+  discount: null,
+};
+
+const fingerprint = Idempofy.custom(
+  userData,
+  ['email', 'name', 'amount', 'status', 'createdAt', 'discount'],
+  {
+    email: { $lower: 'email' }, // john@example.com
+    name: { $trim: 'name' }, // John Doe
+    amount: { $round: 2 }, // 100.00
+    status: 'status', // active (direct reference)
+    createdAt: { $date: 'createdAt' }, // 2023-06-15T10:30:00.000Z
+    discount: { $default: 0 }, // 0 (default value)
+  }
+);
+```
+
+### Transformation Use Cases
+
+| Transformation | Use Case             | Example                                 |
+| -------------- | -------------------- | --------------------------------------- |
+| `$lower`       | Email normalization  | `JOHN@EXAMPLE.COM` → `john@example.com` |
+| `$trim`        | Clean user input     | `"  John Doe  "` → `"John Doe"`         |
+| `$round`       | Financial precision  | `99.999` → `100.00`                     |
+| `$date`        | Date standardization | `Date object` → `ISO string`            |
+| `$if`          | Conditional fields   | Return different fields based on status |
+| `$exists`      | Validation           | Check if required fields are present    |
+| `$default`     | Fallback values      | Use default when field is missing       |
+| `$replace`     | Data cleaning        | Remove unwanted characters              |
+
 ## 🏗️ Production Implementation
 
 ### Database Deduplication
