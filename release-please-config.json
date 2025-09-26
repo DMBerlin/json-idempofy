@@ -18,5 +18,19 @@
   "separate-pull-requests": false,
   "sequential-calls": true,
   "tag-separator": "/",
-  "versioning-strategy": "default"
+  "versioning-strategy": "default",
+  "changelog-sections": [
+    {
+      "type": "feat",
+      "section": "Features"
+    },
+    {
+      "type": "fix",
+      "section": "Bug Fixes"
+    },
+    {
+      "type": "chore",
+      "section": "Miscellaneous Chores"
+    }
+  ]
 }
